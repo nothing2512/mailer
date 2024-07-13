@@ -176,3 +176,7 @@ func (m *Mailer) Send() error {
 	}
 	return nil
 }
+
+func (m *Mailer) Close() {
+	m.client.Close()
+}
