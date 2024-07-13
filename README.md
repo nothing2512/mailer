@@ -39,5 +39,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	m.Close()
 }
 ```
