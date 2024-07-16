@@ -184,6 +184,12 @@ func (m *Mailer) Send() error {
 	if err != nil {
 		return err
 	}
+
+	var buffer bytes.Buffer
+	writer := multipart.NewWriter(&buffer)
+
+	m.buffer = &buffer
+	m.writer = writer
 	return nil
 }
 
