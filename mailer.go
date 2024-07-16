@@ -26,6 +26,8 @@ type Mailer struct {
 
 	cc  []string
 	bcc []string
+
+	from string
 }
 
 func Init(email, password, host, port string) (*Mailer, error) {
@@ -57,6 +59,10 @@ func Init(email, password, host, port string) (*Mailer, error) {
 	}, nil
 }
 
+func (m *Mailer) From(from string) {
+	m.from = from
+}
+
 func (m *Mailer) Cc(emails ...string) {
 	m.cc = emails
 }
@@ -68,6 +74,10 @@ func (m *Mailer) Bcc(emails ...string) {
 func (m *Mailer) getHeaders() string {
 	headers := make(map[string]string)
 	headers["From"] = m.email
+	if m.from != "" {
+		headers["From"] = fmt.Sprintf("%v <%v>", m.from, m.email)
+	}
+
 	headers["To"] = strings.Join(m.recipients, ", ")
 	if len(m.cc) > 0 {
 		headers["Cc"] = strings.Join(m.cc, ", ")
